@@ -1,0 +1,46 @@
+.slider-container {
+  perspective: 800px;
+  width: 100%;
+  max-width: 480px;
+  height: 280px;
+  margin: 2rem auto;  /* Centrage horizontal */
+  position: relative;
+  display: flex;
+  justify-content: center; /* Centre le contenu flex */
+  align-items: center;     /* Centre verticalement si besoin */
+}
+
+.carousel {
+  width: 280px;  /* largeur fixe pour alignement */
+  height: 180px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  margin: 0 auto;  /* au cas où */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  position: absolute;
+  width: 280px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transform-origin: center center -280px;
+  user-select: none;
+  cursor: pointer;
+  filter: grayscale(60%);
+  opacity: 0.4;
+  transition: filter 0.8s ease, opacity 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.carousel-image.active {
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  cursor: default;
+}
