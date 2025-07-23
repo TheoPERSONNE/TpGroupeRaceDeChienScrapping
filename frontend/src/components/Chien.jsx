@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Chien.css';
+import Dragon from './Dragon';
 
 const Chien = () => {
   const [formData, setFormData] = useState({
@@ -95,6 +96,7 @@ const Chien = () => {
             amet maiores reprehenderit odit consectetur animi aliquid ut perferendis 
             corrupti?</p>
     </div>
+    <Dragon />
     </div>
   );
 };
