@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Chien.css';
 import Dragon from './Dragon';
+import EmojiCloud from './EmojiCloud';
 
 const Chien = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,7 @@ const Chien = () => {
 
   return (
       <div className='principal-container'>
+        <EmojiCloud />
     <div className="breeds-container">
       <h2 className="breeds-title">Races de chiens</h2>
 
