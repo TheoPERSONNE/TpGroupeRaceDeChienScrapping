@@ -1,14 +1,23 @@
 .home-container {
+  position: relative;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #00ffe7;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .home-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  text-shadow: 0 0 10px #00ffe7, 0 0 20px #4b00ff;
 }
 
 .home-description {
   font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 5px #00ffe7;
 }
