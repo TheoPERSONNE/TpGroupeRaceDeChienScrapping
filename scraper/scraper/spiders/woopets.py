@@ -9,6 +9,7 @@ class WoopetsSpider(scrapy.Spider):
     start_urls = ["https://www.woopets.fr/chien/races/"]
 
     def parse(self, response):
+        # Récupère tous les liens vers les pages de races
         links = response.css("div.racesList a::attr(href)").getall()
         for link in links:
             yield scrapy.Request(url=response.urljoin(link), callback=self.parse_breed)
@@ -19,7 +20,7 @@ class WoopetsSpider(scrapy.Spider):
         loader.add_value("url", response.url)
         loader.add_css("description", "div.chapo strong::text")
 
-        # --- Extraction table 1 : infos générales ---
+        # Extraction table 1
         field_map = {
             "type_de_poil": "poil",
             "origine": "origine",
