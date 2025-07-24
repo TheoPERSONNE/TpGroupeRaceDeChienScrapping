@@ -1,5 +1,5 @@
 import scrapy
-from itemloaders.processors import MapCompose, TakeFirst  # ✅ Correction ici
+from itemloaders.processors import MapCompose, TakeFirst
 
 def clean_text(text):
     return text.strip()
@@ -9,10 +9,6 @@ class BreedItem(scrapy.Item):
     url = scrapy.Field(output_processor=TakeFirst())
     description = scrapy.Field(output_processor=TakeFirst())
     origine = scrapy.Field(output_processor=TakeFirst())
-    groupe = scrapy.Field(output_processor=TakeFirst())
-    taille = scrapy.Field(output_processor=TakeFirst())
-    poids = scrapy.Field(output_processor=TakeFirst())
-    activite = scrapy.Field(output_processor=TakeFirst())
-    entretien = scrapy.Field(output_processor=TakeFirst())
-    appartement = scrapy.Field(output_processor=TakeFirst())
-    enfants = scrapy.Field(output_processor=TakeFirst())
+    gabarit = scrapy.Field(output_processor=TakeFirst())
+    tete = scrapy.Field(output_processor=TakeFirst())
+    poil = scrapy.Field(output_processor=TakeFirst())

@@ -21,25 +21,26 @@ class WoopetsSpider(scrapy.Spider):
         loader.add_value("url", response.url)
         loader.add_css("description", "section.description p::text")
 
-        rows = response.css("table.race-characteristics tr")
+        rows = response.xpath('//table[contains(@class, "tableInfosRace1")]//tr')
+
+        # Champs que l'on veut extraire
+        field_map = {
+            "type de poil": "poil",
+            "origine": "origine",
+            "gabarit": "gabarit",
+            "forme de la tête": "tete"
+        }
+
         for row in rows:
-            label = row.css("th::text").get("").strip().lower()
-            value = row.css("td::text").get("").strip()
-            if "origine" in label:
-                loader.add_value("origine", value)
-            elif "groupe" in label:
-                loader.add_value("groupe", value)
-            elif "taille" in label:
-                loader.add_value("taille", value)
-            elif "poids" in label:
-                loader.add_value("poids", value)
-            elif "activité" in label:
-                loader.add_value("activite", value)
-            elif "entretien" in label:
-                loader.add_value("entretien", value)
-            elif "appartement" in label:
-                loader.add_value("appartement", value)
-            elif "enfants" in label:
-                loader.add_value("enfants", value)
+            # On récupère tout le texte dans le <th>, même s'il est mélangé (ex: texte + image)
+            raw_label = row.xpath('.//th//text()').getall()
+            label = ''.join(raw_label).strip().lower()
+
+            value = ''.join(row.xpath('.//td//text()').getall()).strip()
+
+            for key, field in field_map.items():
+                if key in label:
+                    loader.add_value(field, value)
+                    break
 
         yield loader.load_item()

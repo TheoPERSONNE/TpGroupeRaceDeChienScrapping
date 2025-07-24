@@ -1,2 +1,20 @@
+# Ignorer le dossier __pycache__ (fichiers Python compilés)
+__pycache__/
+**/__pycache__/
+
+# Ignorer les fichiers .pyc (compilés Python)
+*.pyc
+
+# Ignorer les dossiers cachés de caches (comme celui de scrapy)
+.scrapy/
+
+# Ignorer les logs générés
+*.log
+
+# Ignorer l'environnement virtuel (si tu en as un)
+venv/
 .env
-/__pycache__/
+
+# Ignorer les fichiers système (Mac, Windows)
+.DS_Store
+Thumbs.db

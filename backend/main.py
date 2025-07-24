@@ -16,7 +16,7 @@ def get_all_breeds():
 
 @app.post("/scrape/woopets")
 def run_scraper():
-    result = subprocess.Popen(["scrapy", "crawl", "woopets"], cwd="./scraper")
+    result = subprocess.run(["scrapy", "crawl", "woopets"], cwd="./scraper")
     if result.returncode != 0:
         raise HTTPException(status_code=500, detail="Scraping failed.")
     return {"message": "Scraping terminé."}
