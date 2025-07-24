@@ -1,46 +1,50 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from scraper.items import BreedItem
-
-BASE_URL = "https://www.woopets.fr"
+from scraper.utils.cleaning import clean_label, clean_value, extract_poids_taille
 
 class WoopetsSpider(scrapy.Spider):
     name = "woopets"
     allowed_domains = ["woopets.fr"]
-    start_urls = [f"{BASE_URL}/chien/races/"]
+    start_urls = ["https://www.woopets.fr/chien/races/"]
 
     def parse(self, response):
         links = response.css("div.racesList a::attr(href)").getall()
         for link in links:
-            full_url = response.urljoin(link)
-            yield scrapy.Request(url=full_url, callback=self.parse_breed)
+            yield scrapy.Request(url=response.urljoin(link), callback=self.parse_breed)
 
     def parse_breed(self, response):
         loader = ItemLoader(item=BreedItem(), response=response)
         loader.add_css("nom", "h1::text")
         loader.add_value("url", response.url)
-        loader.add_css("description", "section.description p::text")
+        loader.add_css("description", "div.chapo strong::text")
 
-        rows = response.xpath('//table[contains(@class, "tableInfosRace1")]//tr')
-
-        # Champs que l'on veut extraire
+        # Extraction table 1
         field_map = {
-            "type de poil": "poil",
+            "type_de_poil": "poil",
             "origine": "origine",
             "gabarit": "gabarit",
-            "forme de la tête": "tete"
+            "forme_de_la_tete": "tete",
         }
+        rows_infos = response.xpath('//table[contains(@class, "tableInfosRace1")]//tr')
+        for row in rows_infos:
+            label_raw = ''.join(row.xpath('.//th//text()').getall())
+            label = clean_label(label_raw)
+            value = ''.join(row.xpath('.//td//text()').getall()).strip()
+            if label in field_map:
+                loader.add_value(field_map[label], clean_value(value))
 
-        for row in rows:
-            # On récupère tout le texte dans le <th>, même s'il est mélangé (ex: texte + image)
-            raw_label = row.xpath('.//th//text()').getall()
-            label = ''.join(raw_label).strip().lower()
-
+        # Extraction table poids/taille
+        rows_poids_taille = response.xpath('//table[contains(@class, "tableRacePoidsTaille")]//tr')
+        for row in rows_poids_taille:
+            label_raw = ''.join(row.xpath('.//th//text()').getall())
+            label = clean_label(label_raw)
             value = ''.join(row.xpath('.//td//text()').getall()).strip()
 
-            for key, field in field_map.items():
-                if key in label:
-                    loader.add_value(field, value)
-                    break
+            poids, taille = extract_poids_taille(value)
+            if poids:
+                loader.add_value(f"poids_{label}", poids)
+            if taille:
+                loader.add_value(f"taille_{label}", taille)
 
         yield loader.load_item()

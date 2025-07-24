@@ -12,3 +12,7 @@ class BreedItem(scrapy.Item):
     gabarit = scrapy.Field(output_processor=TakeFirst())
     tete = scrapy.Field(output_processor=TakeFirst())
     poil = scrapy.Field(output_processor=TakeFirst())
+    poids_male = scrapy.Field(output_processor=TakeFirst())
+    poids_femelle = scrapy.Field(output_processor=TakeFirst())
+    taille_male = scrapy.Field(output_processor=TakeFirst())
+    taille_femelle = scrapy.Field(output_processor=TakeFirst())
