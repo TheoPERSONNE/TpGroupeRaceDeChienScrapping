@@ -10,6 +10,7 @@ class WoopetsSpider(scrapy.Spider):
     start_urls = [f"{BASE_URL}/chien/races/"]
 
     def parse(self, response):
+        # Récupère tous les liens vers les pages de races
         links = response.css("div.racesList a::attr(href)").getall()
         for link in links:
             full_url = response.urljoin(link)
@@ -21,9 +22,10 @@ class WoopetsSpider(scrapy.Spider):
         loader.add_value("url", response.url)
         loader.add_css("description", "section.description p::text")
 
+        # Extraction des infos du tableau
         rows = response.xpath('//table[contains(@class, "tableInfosRace1")]//tr')
 
-        # Champs que l'on veut extraire
+        # Mapping des champs à extraire
         field_map = {
             "type de poil": "poil",
             "origine": "origine",
@@ -32,10 +34,9 @@ class WoopetsSpider(scrapy.Spider):
         }
 
         for row in rows:
-            # On récupère tout le texte dans le <th>, même s'il est mélangé (ex: texte + image)
+            # Récupère le texte du <th>
             raw_label = row.xpath('.//th//text()').getall()
             label = ''.join(raw_label).strip().lower()
-
             value = ''.join(row.xpath('.//td//text()').getall()).strip()
 
             for key, field in field_map.items():
@@ -44,3 +45,5 @@ class WoopetsSpider(scrapy.Spider):
                     break
 
         yield loader.load_item()
+
+

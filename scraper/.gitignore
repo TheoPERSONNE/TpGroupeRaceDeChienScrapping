@@ -14,7 +14,10 @@ __pycache__/
 # Ignorer l'environnement virtuel (si tu en as un)
 venv/
 .env
+/env
 
 # Ignorer les fichiers système (Mac, Windows)
 .DS_Store
 Thumbs.db
+
+résultats.json
