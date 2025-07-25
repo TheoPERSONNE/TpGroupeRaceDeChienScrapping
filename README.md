@@ -11,8 +11,8 @@ Le projet est composé de trois parties principales :
 ---
 ## 👨‍💻 Auteurs
 
-* **Théo Personne Nom** – Frontend - Backend - Scraping
-* **Collaborateurs ?** – Scraping / Backend / DevOps
+* **Théo Personne** – Frontend - Backend - Scraping
+* **Théo Kraichette** – Scraping / Backend / DevOps
 ---
 
 ## 📁 Structure du projet
