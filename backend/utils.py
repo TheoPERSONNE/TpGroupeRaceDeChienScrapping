@@ -1,17 +1,32 @@
-def recommend_breeds(breeds, criteria):
-    scores = []
+from schemas import RaceCriteria
 
-    for breed in breeds:
-        score = 0
-        if criteria.taille and breed.get("taille", "").lower() == criteria.taille.lower():
-            score += 1
-        if criteria.activite and breed.get("activite", "").lower() == criteria.activite.lower():
-            score += 1
-        if criteria.habitation and criteria.habitation.lower() in breed.get("appartement", "").lower():
-            score += 1
-        if criteria.enfants and "oui" in breed.get("enfants", "").lower():
-            score += 1
-        scores.append((score, breed))
-        
-    scores.sort(key=lambda x: -x[0])
-    return [b for s, b in scores if s > 0][:5]
+def score_similarity(race: dict, criteria: RaceCriteria) -> float:
+    score = 0
+    count = 0
+
+    def compare_section(section_name):
+        nonlocal score, count
+        crit_blocks = getattr(criteria, section_name)
+        race_blocks = race.get(section_name, [])
+        if crit_blocks and race_blocks:
+            for crit_block in crit_blocks:
+                crit_stats = crit_block.stats
+                for race_block in race_blocks:
+                    race_stats = race_block.get("stats", {})
+                    for key, val in crit_stats.items():
+                        if key in race_stats:
+                            score += abs(race_stats[key] - val)
+                            count += 1
+
+    for section in [
+        "activite",
+        "caractere",
+        "comportementautres",
+        "conditionsvie",
+        "education",
+        "entretien",
+        "sante",
+    ]:
+        compare_section(section)
+
+    return score / count if count > 0 else float('inf')

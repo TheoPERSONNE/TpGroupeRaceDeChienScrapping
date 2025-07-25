@@ -23,7 +23,7 @@ class BreedItem(scrapy.Item):
     sante = scrapy.Field()
     # vie = scrapy.Field()
     entretien = scrapy.Field()
-    # budget = scrapy.Field()
+    budget = scrapy.Field()
     activite = scrapy.Field()
-    # competition = scrapy.Field()
+    autres = scrapy.Field(output_processor=TakeFirst())
     

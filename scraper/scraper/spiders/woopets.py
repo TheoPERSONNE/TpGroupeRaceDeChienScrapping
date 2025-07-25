@@ -26,6 +26,7 @@ class WoopetsSpider(scrapy.Spider):
             "origine": "origine",
             "gabarit": "gabarit",
             "forme_de_la_tete": "tete",
+            "autres": "caractere du maitre",
         }
 
         rows_infos = response.xpath('//table[contains(@class, "tableInfosRace1")]//tr')
@@ -76,5 +77,34 @@ class WoopetsSpider(scrapy.Spider):
                     "resume": section_title.strip(),
                     "stats": stats
                 })
+
+        autres_rows = response.xpath('//h2[@id="autres"]/following-sibling::table[1]//tr')
+        for row in autres_rows:
+            label = ''.join(row.xpath('.//th//text()').getall()).strip()
+            value = ''.join(row.xpath('.//td//text()').getall()).strip()
+            if label and value:
+                loader.add_value("autres", {clean_label(label): clean_value(value)})
+                
+        budget_sections = response.xpath('//h2[@id="budget"]/following-sibling::div[contains(@class, "budget-range")][1]/div[contains(@class, "budget-range-col")]')
+
+        budget_data = {}
+
+        for section in budget_sections:
+            title = section.xpath('.//p[1]/text()').get(default="").strip().lower()
+
+            mini = section.xpath('.//span[contains(., "Mini")]/text()[2]').get()
+            maxi = section.xpath('.//span[contains(., "Maxi")]/text()[2]').get()
+
+            if mini and maxi:
+                mini = mini.strip()
+                maxi = maxi.strip()
+
+                if "achat" in title:
+                    budget_data["prix_achat"] = {"mini": mini, "maxi": maxi}
+                elif "entretien" in title:
+                    budget_data["entretien_annuel"] = {"mini": mini, "maxi": maxi}
+
+        if budget_data:
+            loader.add_value("budget", budget_data)
 
         yield loader.load_item()
