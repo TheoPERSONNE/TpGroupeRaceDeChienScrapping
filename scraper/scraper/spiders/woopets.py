@@ -19,7 +19,7 @@ class WoopetsSpider(scrapy.Spider):
         loader.add_css("nom", "h1::text")
         loader.add_value("url", response.url)
         loader.add_css("description", "div.chapo strong::text")
-
+        loader.add_css("image_url", "figure picture img::attr(src)")
         # Extraction table 1
         field_map = {
             "type_de_poil": "poil",

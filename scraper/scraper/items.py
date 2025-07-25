@@ -7,6 +7,7 @@ def clean_text(text):
 class BreedItem(scrapy.Item):
     nom = scrapy.Field(input_processor=MapCompose(clean_text), output_processor=TakeFirst())
     url = scrapy.Field(output_processor=TakeFirst())
+    image_url = scrapy.Field(output_processor=TakeFirst())
     description = scrapy.Field(output_processor=TakeFirst())
     origine = scrapy.Field(output_processor=TakeFirst())
     gabarit = scrapy.Field(output_processor=TakeFirst())

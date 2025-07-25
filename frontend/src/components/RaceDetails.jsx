@@ -116,7 +116,7 @@ export default function RaceDetails() {
      setResult(json.recommendations);
       openModal();
     } catch (e) {
-      alert("Erreur lors de la requête");
+      alert("Erreur lors de la requête", e);
     } finally {
       setLoading(false);
     }
@@ -158,9 +158,8 @@ export default function RaceDetails() {
                         type="number"
                         min={0}
                         max={5}
-                        value={stats[section]?.[key] || 0}
+                        value={stats[section]?.[key] || null}
                         onChange={(e) => handleChange(section, key, e.target.value)}
-                        required
                       />
                     </label>
                   </div>
@@ -189,13 +188,14 @@ export default function RaceDetails() {
               &times;
             </button>
           
-            <h2>Résultats</h2>
+            <h2>Notre top 5 pour vous</h2>
             <EmojiCloud />
             {result && result.length === 0 && <p>Aucune race trouvée</p>}
 
             {result?.map((race, i) => (
               <div key={i} className="result-card">
                 <h3>{race.nom}</h3>
+                <img src={race.image_url} className="centered-img"/>
                 <p>{race.description || "Pas de description"}</p>
                 <p><b>Origine:</b> {race.origine}</p>
                 <p><b>Gabarit:</b> {race.gabarit}</p>

@@ -21,7 +21,7 @@ export default function RacesList() {
         const data = await res.json();
         setRaces(data.races || []);
       } catch (e) {
-        alert("Erreur lors du chargement des races");
+        alert("Erreur lors du chargement des races", e);
       } finally {
         setLoading(false);
       }
@@ -66,6 +66,7 @@ export default function RacesList() {
           {races.map((race) => (
             <li key={race.nom} className="race-item">
               <h3>{race.nom}</h3>
+              <img src={race.image_url} className="centered-img"/>
               <p><b>Origine:</b> {race.origine}</p>
               <p><b>Gabarit:</b> {race.gabarit}</p>
               <p>{race.description || "Pas de description"}</p>
