@@ -1,0 +1,80 @@
+/* RacesList.css */
+
+.races-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.races-list-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filters input[type="text"],
+.filters select {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 200px;
+  transition: border-color 0.3s ease;
+}
+
+.filters input[type="text"]:focus,
+.filters select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.races-list {
+  list-style: none;
+  padding: 0;
+}
+
+.race-item {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.race-item h3 {
+  margin: 0 0 0.5rem;
+  color: #007bff;
+}
+
+.race-item p {
+  margin: 0.25rem 0;
+}
+
+.race-item a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: white;
+  background-color: #007bff;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.race-item a:hover {
+  background-color: #0056b3;
+}
+
+.loading,
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}

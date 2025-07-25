@@ -1,23 +1,26 @@
+from typing import List, Dict
 from pydantic import BaseModel
-from typing import Optional
 
-class RecoRequest(BaseModel):
-    taille: Optional[str]
-    activite: Optional[str]
-    habitation: Optional[str]
-    experience: Optional[str]
-    enfants: Optional[bool]
-    allergies: Optional[bool]
+class StatSection(BaseModel):
+    resume: str
+    stats: Dict[str, int]
 
-class BreedOut(BaseModel):
+class RaceModel(BaseModel):
     nom: str
+    activite: List[StatSection]
+    caractere: List[StatSection]
+    comportementautres: List[StatSection]
+    conditionsvie: List[StatSection]
     description: str
-    origine: Optional[str]
-    groupe: Optional[str]
-    taille: Optional[str]
-    poids: Optional[str]
-    activite: Optional[str]
-    entretien: Optional[str]
-    appartement: Optional[str]
-    enfants: Optional[str]
+    education: List[StatSection]
+    entretien: List[StatSection]
+    gabarit: str
+    origine: str
+    poids_femelle: str
+    poids_male: str
+    poil: str
+    sante: List[StatSection]
+    taille_femelle: str
+    taille_male: str
+    tete: str
     url: str

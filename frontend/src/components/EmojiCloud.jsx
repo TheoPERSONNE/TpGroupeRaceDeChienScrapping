@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './EmojiCloud.css';
 
-const emojis = ['🤖', '👾', '⚡', '🧠', '🚀', '🛰️', '🤯', '🧬', '🛸'];
+const emojis = ["🎉", "🐶", "✨", "🎈", "🐕"];
 
 const EmojiCloud = () => {
   const containerRef = useRef();
@@ -22,7 +22,7 @@ const EmojiCloud = () => {
       }, 9000);
     };
 
-    const interval = setInterval(spawnEmoji, 10);
+    const interval = setInterval(spawnEmoji, 200);
     return () => clearInterval(interval);
   }, []);
 

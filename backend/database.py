@@ -3,20 +3,15 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
 client = None
 db = None
 
 def connect_db():
     global client, db
     uri = os.getenv("MONGO_URI")
+    if not uri:
+        raise ValueError("MONGO_URI is not set in the .env file.")
     client = MongoClient(uri)
     db = client["dogmatch"]
-
-def get_breeds():
-    return list(db["breeds"].find({}, {"_id": 0}))
-
-def insert_breeds(breeds: list[dict]):
-    if not breeds:
-        return 0
-    db["breeds"].insert_many(breeds)
-    return len(breeds)
+    print("✅ Connexion à MongoDB réussie.")

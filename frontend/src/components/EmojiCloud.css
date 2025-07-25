@@ -1,6 +1,6 @@
 .emoji-cloud {
   position: fixed;
-  width: 100vw;
+  width: 60vw;
   height: 100vh;
   pointer-events: none;
   overflow: hidden;
