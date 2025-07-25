@@ -9,6 +9,7 @@ class StatSection(BaseModel):
 class RaceModel(BaseModel):
     nom: str
     activite: List[StatSection]
+    budget: List[StatSection]
     caractere: List[StatSection]
     comportementautres: List[StatSection]
     conditionsvie: List[StatSection]

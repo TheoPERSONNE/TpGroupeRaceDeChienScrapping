@@ -199,6 +199,7 @@ export default function RaceDetails() {
                 <p>{race.description || "Pas de description"}</p>
                 <p><b>Origine:</b> {race.origine}</p>
                 <p><b>Gabarit:</b> {race.gabarit}</p>
+                <p><b>Fourche de prix :</b>  Min: {race.budget?.[0]?.prix_achat?.mini || "Non renseigné"} / Max: {race.budget?.[0]?.prix_achat?.maxi || "Non renseigné"} </p>
                 <a href={race.url} target="_blank" rel="noreferrer" className="link-btn">
                   En savoir plus
                 </a>
